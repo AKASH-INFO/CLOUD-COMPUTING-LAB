@@ -1,144 +1,143 @@
 # CLOUD-COMPUTING-LAB
- **Student Information System (SIS)** project. This template covers project purpose, setup instructions, features, and usage. You can adjust the tech stack or features as needed.
+Installing **Google App Engine**, setting up a project, and deploying a basic **"Hello, World"** web app using **Python**.
 
 ---
 
-# 🎓 Student Information System
+````markdown
+# Google App Engine Hello World (Python)
 
-A web-based application to manage student records, including registration, academic performance, attendance, and more. This system is ideal for schools, colleges, and training institutes.
-
----
-
-## 📦 Features
-
-* Student registration and profile management
-* Course enrollment and tracking
-* Grades and performance reports
-* Attendance management
-* Admin dashboard
-* Role-based access (Admin, Teacher, Student)
-* Responsive UI
+This project demonstrates how to install Google App Engine and deploy a simple "Hello, World" app using Python.
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠 Prerequisites
 
-| Component      | Technology                              |
-| -------------- | --------------------------------------- |
-| Frontend       | HTML, CSS, JavaScript / React / Angular |
-| Backend        | Node.js / Django / PHP / Java Spring    |
-| Database       | MySQL / PostgreSQL / MongoDB            |
-| Authentication | JWT / Sessions                          |
-| Hosting        | (Optional) Heroku / Vercel / Netlify    |
+Before you begin, make sure you have the following:
+
+- A **Google Cloud account**: https://cloud.google.com
+- A **Google Cloud project** with **billing enabled**
 
 ---
 
-## 🚀 Getting Started
+## 📥 Step 1: Install Google Cloud SDK
 
-### 1. Clone the Repository
+1. Download and install the Cloud SDK:  
+   👉 https://cloud.google.com/sdk/docs/install
+
+2. After installation, open your terminal and run:
 
 ```bash
-git clone https://github.com/yourusername/student-information-system.git
-cd student-information-system
-```
+gcloud init
+````
 
-### 2. Install Dependencies
+* Log in with your Google account
+* Select or create a Google Cloud project
 
-#### Backend
+---
+
+## ☁️ Step 2: Enable App Engine
+
+Enable App Engine and select your region:
 
 ```bash
-cd backend
-npm install      # or pip install -r requirements.txt for Python
+gcloud app create --region=us-central
 ```
 
-#### Frontend
+Replace `us-central` with your preferred region (e.g., `europe-west`).
+
+---
+
+## 📂 Step 3: Create Hello World App
+
+### Directory Structure
+
+```
+hello-world/
+├── app.yaml
+├── main.py
+└── requirements.txt
+```
+
+### `main.py`
+
+```python
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route('/')
+def hello():
+    return 'Hello, World from Google App Engine!'
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)
+```
+
+### `app.yaml`
+
+```yaml
+runtime: python39
+entrypoint: gunicorn -b :$PORT main:app
+
+handlers:
+- url: /.*
+  script: auto
+```
+
+### `requirements.txt`
+
+```text
+Flask==2.3.3
+gunicorn==21.2.0
+```
+
+---
+
+## 🔧 Step 4: Install Python Packages
+
+Run the following in your project folder:
 
 ```bash
-cd ../frontend
-npm install
-```
-
-### 3. Configure Environment Variables
-
-Create a `.env` file in both `backend/` and `frontend/` directories:
-
-#### Example for `.env` (backend)
-
-```
-PORT=5000
-DB_URI=your_database_connection_string
-JWT_SECRET=your_jwt_secret_key
+pip install -r requirements.txt
 ```
 
 ---
 
-### 4. Run the Application
+## 🚀 Step 5: Deploy to App Engine
 
-#### Backend
+Deploy your app with:
 
 ```bash
-cd backend
-npm start
+gcloud app deploy
 ```
 
-#### Frontend
+To open your deployed app in the browser:
 
 ```bash
-cd frontend
-npm start
-```
-
-Visit: `http://localhost:3000`
-
----
-
-## 🧪 Sample Credentials (Optional)
-
-For testing purposes:
-
-| Role    | Username                                        | Password   |
-| ------- | ----------------------------------------------- | ---------- |
-| Admin   | [admin@school.com](mailto:admin@school.com)     | admin123   |
-| Teacher | [teacher@school.com](mailto:teacher@school.com) | teach123   |
-| Student | [student@school.com](mailto:student@school.com) | student123 |
-
----
-
-## 📁 Project Structure
-
-```
-student-information-system/
-├── backend/
-│   ├── controllers/
-│   ├── models/
-│   ├── routes/
-│   └── app.js
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   └── App.js
-├── README.md
+gcloud app browse
 ```
 
 ---
 
-## ✅ Future Enhancements
+## 🧪 Step 6: Run Locally
 
-* Email notifications
-* Fee management system
-* Exam scheduling
-* Mobile app version
+To test the app locally before deployment:
 
----
+```bash
+python main.py
+```
 
-## 📃 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Visit `http://127.0.0.1:8080` in your browser.
 
 ---
 
-## 🙌 Acknowledgments
+## ✅ Done!
 
-Thanks to all contributors and open-source libraries used in this project.
+You’ve successfully created and deployed a "Hello, World" app using **Google App Engine** with **Python**. 🎉
+
+```
 
 ---
+
+
+
